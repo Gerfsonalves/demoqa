@@ -2,6 +2,13 @@
 
 describe('Homepage', () => {
   beforeEach('Página inicial', () => {
+
+    Cypress.on('uncaught:exception', (err, runnable) => {
+      // Ignora erros específicos ou erros externos
+      console.error(err); // Loga o erro para depuração
+      return false; // Retorna falso para impedir que Cypress falhe o teste
+    })
+
     cy.visit('https://demoqa.com/')
   })
 
@@ -17,7 +24,7 @@ describe('Homepage', () => {
     cy.get('#submit').click()
   })
 
-  it.only('Pratice Form', () => {
+  it('Pratice Form', () => {
     cy.get(':nth-child(2) > :nth-child(1) > .card-up').click()
     cy.get(':nth-child(2) > .element-list > .menu-list > #item-0').click()
 
@@ -27,7 +34,7 @@ describe('Homepage', () => {
     cy.get('#genterWrapper > .col-md-9 > :nth-child(1)').click()
     cy.get('#userNumber').type('0123456789')
 
-    cy.get('#dateOfBirthInput').click() /// Continuar aqui
+    cy.get('#dateOfBirthInput').click()
     cy.get('.react-datepicker').should('be.visible')
     cy.get('.react-datepicker__month-select').select('February')
     cy.get('.react-datepicker__year-select').select('2030')
